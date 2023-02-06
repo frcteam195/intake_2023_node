@@ -3,13 +3,11 @@
 # Import required Python code.
 import roslib
 import rospy
-import tf2_ros
+
 from intake_node.main import IntakeNode
 
 NODE_NAME = 'intake_node'
 roslib.load_manifest(NODE_NAME)
-
-
 
 if __name__ == '__main__':
     rospy.init_node(NODE_NAME)
