@@ -33,13 +33,13 @@ class IntakeNode():
         intake_rectangle_2.set_color(Color(.7, .7, .7, 1.0))
         intake_rectangle_2.publish()
 
-        self.arrow = Arrow("arrow", 2, "arrow")
-        self.arrow_transform = Transform()
-        self.arrow.set_transform(self.arrow_transform)
-        self.arrow.set_scale(Scale(0.5, 0.1, 0.1)) #14 out (11.995, 16, 2)
-        self.red = 0
-        self.green = 0
-        self.blue = 0
+        arrow = Arrow("arrow", 2, "arrow")
+        arrow_transform = Transform()
+        arrow.set_transform(arrow_transform)
+        arrow.set_scale(Scale(0.5, 0.1, 0.1)) #14 out (11.995, 16, 2)
+        arrow.set_color(Color(0.949, 0.875, 0.027, 1.0)) 
+        arrow.publish()
+        
 
 
         self.control_subscriber = BufferedROSMsgHandlerPy(Intake_Control)
@@ -90,6 +90,8 @@ class IntakeNode():
         elif intake < 0:
             transform.angular.pitch = math.radians(-pitch_degrees)
             transform.linear.z = 0.9
+        else:
+            transform.linear.z = 100
 
        
 
@@ -128,20 +130,8 @@ class IntakeNode():
                        self.pincherSolenoid.set(SolenoidState.ON)
                     else:
                         self.pincherSolenoid.set(SolenoidState.OFF)
-            if self.red < 1:
-                self.red = self.red + 0.1 
-            else:
-                self. red = 0
-            if self.green < 1:
-                self.green = self.green + 0.2
-            else:
-                self.green = 0
-            if self.blue < 1:
-                self.blue = self.blue + 0.3
-            else:
-                self.blue = 0
-            self.arrow.set_color(Color(self.red, self.green, self.blue, 1.0)) #Yellow: .949, .875, .027, 1.0
-            self.arrow.publish()
+            
+            
             
             self.publish_intake_1_link(25, self.pincherSolenoid.get() == SolenoidState.ON)
             self.publish_intake_2_link(25, self.pincherSolenoid.get() == SolenoidState.ON)
