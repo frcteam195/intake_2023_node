@@ -102,7 +102,6 @@ class IntakeNode():
     def loop(self) -> None:
 
         self.intakeRollerMotor = Motor("intake", MotorType.TalonFX)
-        # wristRollerMotor = Motor("wrist", MotorType.TalonFX)
 
         self.pincherSolenoid = Solenoid("pincher", SolenoidType.SINGLE)
 
@@ -133,9 +132,9 @@ class IntakeNode():
             
             
             
-            self.publish_intake_1_link(25, self.pincherSolenoid.get() == SolenoidState.ON)
-            self.publish_intake_2_link(25, self.pincherSolenoid.get() == SolenoidState.ON)
-            self.publish_arrow_link(90, self.intakeRollerMotor.get_sensor_velocity())
+                #self.publish_intake_1_link(intake_ctrl_msg.wrist_twist, self.pincherSolenoid.get() == SolenoidState.ON)
+                #self.publish_intake_\_link(intake_ctrl_msg.wrist_twist, self.pincherSolenoid.get() == SolenoidState.ON)
+                self.publish_arrow_link(90, self.intakeRollerMotor.get_sensor_velocity())
             
             status_message = Intake_Status()
             self.status_publisher.publish(status_message)
