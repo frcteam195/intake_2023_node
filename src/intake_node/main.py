@@ -55,29 +55,27 @@ class IntakeNode():
 
         t1.join(5)
     
-    def publish_intake_1_link(self, yaw_degrees: float, Pinched: bool):
+    def publish_intake_1_link(self, Pinched: bool):
         transform = Transform()
   
         transform.angular.roll = math.radians(15) if Pinched else math.radians(45)
            
 
-        transform.angular.yaw = math.radians(yaw_degrees)
         transform.linear.z = 0.4064
 
 
-        transform_link = TransformLink("intake_1", "arm_extender")
+        transform_link = TransformLink("intake_1", "wrist_link")
         transform_link.set_transform(transform)
         transform_link.publish()
 
-    def publish_intake_2_link(self, yaw_degrees: float, Pinched: bool):
+    def publish_intake_2_link(self, Pinched: bool):
         transform = Transform()
       
         transform.angular.roll = math.radians(-15) if Pinched else math.radians(-45)
            
-        transform.angular.yaw = math.radians(yaw_degrees)
         transform.linear.z = 0.4064
 
-        transform_link = TransformLink("intake_2", "arm_extender")
+        transform_link = TransformLink("intake_2", "wrist_link")
         transform_link.set_transform(transform)
         transform_link.publish()
     
@@ -95,7 +93,7 @@ class IntakeNode():
 
        
 
-        transform_link = TransformLink("arrow", "arm_extender")
+        transform_link = TransformLink("arrow", "wrist_link")
         transform_link.set_transform(transform)
         transform_link.publish()
 
@@ -132,8 +130,8 @@ class IntakeNode():
             
             
             
-                #self.publish_intake_1_link(intake_ctrl_msg.wrist_twist, self.pincherSolenoid.get() == SolenoidState.ON)
-                #self.publish_intake_\_link(intake_ctrl_msg.wrist_twist, self.pincherSolenoid.get() == SolenoidState.ON)
+                self.publish_intake_1_link(self.pincherSolenoid.get() == SolenoidState.ON)
+                self.publish_intake_2_link(self.pincherSolenoid.get() == SolenoidState.ON)
                 self.publish_arrow_link(90, self.intakeRollerMotor.get_sensor_velocity())
             
             status_message = Intake_Status()
