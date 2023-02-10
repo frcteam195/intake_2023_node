@@ -24,7 +24,7 @@ class IntakeSimulation:
         arrow = Arrow("arrow")
         arrow_transform = Transform()
         arrow.set_transform(arrow_transform)
-        arrow.set_scale(Scale(0.5, 0.1, 0.1)) #14 out (11.995, 16, 2)
+        arrow.set_scale(Scale(0.5, 0.1, 0.1))
         arrow.set_color(Color(0.949, 0.875, 0.027, 1.0)) 
         arrow.publish()
 
@@ -52,10 +52,10 @@ class IntakeSimulation:
         
         if intake > 0 :
             transform.angular.pitch = math.radians(pitch_degrees)
-            transform.linear.z = 1.5
+            transform.linear.z = -0.5
         elif intake < 0:
             transform.angular.pitch = math.radians(-pitch_degrees)
-            transform.linear.z = 0.9
+            transform.linear.z = -1
         else:
             transform.linear.z = 100
 
