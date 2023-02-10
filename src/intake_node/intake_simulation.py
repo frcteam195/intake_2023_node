@@ -1,22 +1,23 @@
 from ck_utilities_py_node.transform_links import *
 from ck_utilities_py_node.rviz_shapes import *
 import math
+from ck_utilities_py_node.ckmath import *
 
 class IntakeSimulation:
     def __init__(self) -> None:
         intake_rectangle_1 = Cube("intake_1")
         intake_rectangle_1_transform = Transform()
-        intake_rectangle_1_transform.linear.z = 0.2032 #12 in
+        intake_rectangle_1_transform.linear.z = inches_to_meters(-5.83387085)
         intake_rectangle_1.set_transform(intake_rectangle_1_transform)
-        intake_rectangle_1.set_scale(Scale(0.0508, 0.0508, 0.4064)) #14 out (11.995, 16, 2) 
+        intake_rectangle_1.set_scale(Scale(0.0508, 0.0508, inches_to_meters(11.66774170))) 
         intake_rectangle_1.set_color(Color(.7, .7, .7, 1.0))
         intake_rectangle_1.publish()
 
         intake_rectangle_2 = Cube("intake_2")
         intake_rectangle_2_transform = Transform()
-        intake_rectangle_2_transform.linear.z = 0.2032 #12 in
+        intake_rectangle_2_transform.linear.z = inches_to_meters(-5.83387085)
         intake_rectangle_2.set_transform(intake_rectangle_2_transform)
-        intake_rectangle_2.set_scale(Scale(0.0508, 0.0508, 0.4064)) #14 out (11.995, 16, 2) 
+        intake_rectangle_2.set_scale(Scale(0.0508, 0.0508, inches_to_meters(11.66774170)))
         intake_rectangle_2.set_color(Color(.7, .7, .7, 1.0))
         intake_rectangle_2.publish()
 
@@ -32,10 +33,6 @@ class IntakeSimulation:
         transform = Transform()
 
         transform.angular.roll = math.radians(15) if Pinched else math.radians(45)
-        
-
-        transform.linear.z = 0.4064
-
 
         transform_link = TransformLink("intake_1", "wrist_link")
         transform_link.set_transform(transform)
@@ -45,9 +42,7 @@ class IntakeSimulation:
         transform = Transform()
     
         transform.angular.roll = math.radians(-15) if Pinched else math.radians(-45)
-        
-        transform.linear.z = 0.4064
-
+    
         transform_link = TransformLink("intake_2", "wrist_link")
         transform_link.set_transform(transform)
         transform_link.publish()
