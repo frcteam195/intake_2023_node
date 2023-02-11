@@ -7,7 +7,7 @@ class IntakeSimulation:
     def __init__(self) -> None:
         intake_rectangle_1 = Cube("intake_1")
         intake_rectangle_1_transform = Transform()
-        intake_rectangle_1_transform.linear.z = inches_to_meters(-5.83387085)
+        intake_rectangle_1_transform.linear.z = inches_to_meters(5.83387085)
         intake_rectangle_1.set_transform(intake_rectangle_1_transform)
         intake_rectangle_1.set_scale(Scale(0.0508, 0.0508, inches_to_meters(11.66774170))) 
         intake_rectangle_1.set_color(Color(.7, .7, .7, 1.0))
@@ -15,7 +15,7 @@ class IntakeSimulation:
 
         intake_rectangle_2 = Cube("intake_2")
         intake_rectangle_2_transform = Transform()
-        intake_rectangle_2_transform.linear.z = inches_to_meters(-5.83387085)
+        intake_rectangle_2_transform.linear.z = inches_to_meters(5.83387085)
         intake_rectangle_2.set_transform(intake_rectangle_2_transform)
         intake_rectangle_2.set_scale(Scale(0.0508, 0.0508, inches_to_meters(11.66774170)))
         intake_rectangle_2.set_color(Color(.7, .7, .7, 1.0))
@@ -52,10 +52,10 @@ class IntakeSimulation:
         
         if intake > 0 :
             transform.angular.pitch = math.radians(pitch_degrees)
-            transform.linear.z = -0.5
+            transform.linear.z = 0.5
         elif intake < 0:
             transform.angular.pitch = math.radians(-pitch_degrees)
-            transform.linear.z = -1
+            transform.linear.z = 1
         else:
             transform.linear.z = 100
 
