@@ -45,7 +45,7 @@ class IntakeNode():
         Periodic function for the Intake Node.
         """
 
-        rate = rospy.Rate(20)
+        rate = rospy.Rate(50)
 
         while not rospy.is_shutdown():
 
