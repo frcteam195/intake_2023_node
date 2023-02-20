@@ -52,10 +52,10 @@ class IntakeSimulation:
         
         if intake > 0 :
             transform.angular.pitch = math.radians(pitch_degrees)
-            transform.linear.z = 0.5
+            transform.linear.z = 1
         elif intake < 0:
             transform.angular.pitch = math.radians(-pitch_degrees)
-            transform.linear.z = 1
+            transform.linear.z = 0.5
         else:
             transform.linear.z = 100
 
