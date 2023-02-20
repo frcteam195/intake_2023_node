@@ -45,7 +45,7 @@ class IntakeNode():
         Periodic function for the Intake Node.
         """
 
-        rate = rospy.Rate(20)
+        rate = rospy.Rate(50)
 
         while not rospy.is_shutdown():
 
@@ -53,13 +53,13 @@ class IntakeNode():
                 intake_ctrl_msg: Intake_Control = self.control_subscriber.get()
                 if robot_status.get_mode() == RobotMode.DISABLED:
                     self.intakeRollerMotor.set(ControlMode.PERCENT_OUTPUT, 0.0, 0.0)
-
+                    self.pincherSolenoid.set(SolenoidState.OFF)
                 else:
                     if intake_ctrl_msg.rollers_intake:
                         self.intakeRollerMotor.set(ControlMode.PERCENT_OUTPUT, 1.0, 0.0)
 
                     elif intake_ctrl_msg.rollers_outtake:
-                        self.intakeRollerMotor.set(ControlMode.PERCENT_OUTPUT, -1.0, 0.0)
+                        self.intakeRollerMotor.set(ControlMode.PERCENT_OUTPUT, -0.15, 0.0)
 
                     else:
                         self.intakeRollerMotor.set(ControlMode.PERCENT_OUTPUT, 0.0, 0.0)
@@ -74,6 +74,7 @@ class IntakeNode():
                 self.intake_simulation.publish_arrow_link(90, self.intakeRollerMotor.get_sensor_velocity())
 
             status_message = Intake_Status()
+            status_message.pincher_solenoid_on = self.pincherSolenoid.get() == SolenoidState.ON
             self.status_publisher.publish(status_message)
 
             rate.sleep()
