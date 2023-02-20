@@ -53,7 +53,7 @@ class IntakeNode():
                 intake_ctrl_msg: Intake_Control = self.control_subscriber.get()
                 if robot_status.get_mode() == RobotMode.DISABLED:
                     self.intakeRollerMotor.set(ControlMode.PERCENT_OUTPUT, 0.0, 0.0)
-
+                    self.pincherSolenoid.set(SolenoidState.OFF)
                 else:
                     if intake_ctrl_msg.rollers_intake:
                         self.intakeRollerMotor.set(ControlMode.PERCENT_OUTPUT, 1.0, 0.0)
