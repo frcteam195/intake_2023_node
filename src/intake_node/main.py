@@ -64,10 +64,10 @@ class IntakeNode():
                     else:
                         self.intakeRollerMotor.set(ControlMode.PERCENT_OUTPUT, 0.0, 0.0)
 
-                    if intake_ctrl_msg.pincher_solenoid_on:
-                        self.pincherSolenoid.set(SolenoidState.ON)
-                    else:
+                    if intake_ctrl_msg.pinched:
                         self.pincherSolenoid.set(SolenoidState.OFF)
+                    else:
+                        self.pincherSolenoid.set(SolenoidState.ON)
 
                 self.intake_simulation.publish_intake_1_link(self.pincherSolenoid.get() == SolenoidState.ON)
                 self.intake_simulation.publish_intake_2_link(self.pincherSolenoid.get() == SolenoidState.ON)
