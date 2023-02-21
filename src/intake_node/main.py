@@ -74,7 +74,7 @@ class IntakeNode():
                 self.intake_simulation.publish_arrow_link(90, self.intakeRollerMotor.get_sensor_velocity())
 
             status_message = Intake_Status()
-            status_message.pincher_solenoid_on = self.pincherSolenoid.get() == SolenoidState.ON
+            status_message.pinched = self.pincherSolenoid.get() == SolenoidState.OFF
             self.status_publisher.publish(status_message)
 
             rate.sleep()
