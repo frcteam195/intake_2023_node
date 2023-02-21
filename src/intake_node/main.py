@@ -49,18 +49,17 @@ class IntakeNode():
 
         while not rospy.is_shutdown():
 
-            if self.control_subscriber.get() is not None:
-                intake_ctrl_msg: Intake_Control = self.control_subscriber.get()
-                if robot_status.get_mode() == RobotMode.DISABLED:
+            if robot_status.get_mode() == RobotMode.DISABLED:
                     self.intakeRollerMotor.set(ControlMode.PERCENT_OUTPUT, 0.0, 0.0)
                     self.pincherSolenoid.set(SolenoidState.OFF)
-                else:
+            else:
+                if self.control_subscriber.get() is not None:
+                    intake_ctrl_msg: Intake_Control = self.control_subscriber.get()
+                    
                     if intake_ctrl_msg.rollers_intake:
                         self.intakeRollerMotor.set(ControlMode.PERCENT_OUTPUT, 1.0, 0.0)
-
                     elif intake_ctrl_msg.rollers_outtake:
                         self.intakeRollerMotor.set(ControlMode.PERCENT_OUTPUT, -0.15, 0.0)
-
                     else:
                         self.intakeRollerMotor.set(ControlMode.PERCENT_OUTPUT, 0.0, 0.0)
 
@@ -69,9 +68,9 @@ class IntakeNode():
                     else:
                         self.pincherSolenoid.set(SolenoidState.ON)
 
-                self.intake_simulation.publish_intake_1_link(self.pincherSolenoid.get() == SolenoidState.ON)
-                self.intake_simulation.publish_intake_2_link(self.pincherSolenoid.get() == SolenoidState.ON)
-                self.intake_simulation.publish_arrow_link(90, self.intakeRollerMotor.get_sensor_velocity())
+            self.intake_simulation.publish_intake_1_link(self.pincherSolenoid.get() == SolenoidState.OFF)
+            self.intake_simulation.publish_intake_2_link(self.pincherSolenoid.get() == SolenoidState.OFF)
+            self.intake_simulation.publish_arrow_link(90, self.intakeRollerMotor.get_sensor_velocity())
 
             status_message = Intake_Status()
             status_message.pincher_solenoid_on = self.pincherSolenoid.get() == SolenoidState.ON
