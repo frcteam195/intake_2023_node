@@ -46,6 +46,7 @@ class IntakeNode():
         """
 
         rate = rospy.Rate(50)
+        frame_count = 0
 
         while not rospy.is_shutdown():
 
@@ -55,7 +56,7 @@ class IntakeNode():
             else:
                 if self.control_subscriber.get() is not None:
                     intake_ctrl_msg: Intake_Control = self.control_subscriber.get()
-                    
+
                     if intake_ctrl_msg.rollers_intake:
                         self.intakeRollerMotor.set(ControlMode.PERCENT_OUTPUT, 1.0, 0.0)
                     elif intake_ctrl_msg.rollers_outtake:
@@ -68,12 +69,16 @@ class IntakeNode():
                     else:
                         self.pincherSolenoid.set(SolenoidState.ON)
 
-            self.intake_simulation.publish_intake_1_link(self.pincherSolenoid.get() == SolenoidState.OFF)
-            self.intake_simulation.publish_intake_2_link(self.pincherSolenoid.get() == SolenoidState.OFF)
-            self.intake_simulation.publish_arrow_link(90, self.intakeRollerMotor.get_sensor_velocity())
+            if frame_count % 3 is 0:
+                self.intake_simulation.publish_intake_1_link(self.pincherSolenoid.get() == SolenoidState.OFF)
+                self.intake_simulation.publish_intake_2_link(self.pincherSolenoid.get() == SolenoidState.OFF)
+                self.intake_simulation.publish_arrow_link(90, self.intakeRollerMotor.get_sensor_velocity())
 
             status_message = Intake_Status()
             status_message.pinched = self.pincherSolenoid.get() == SolenoidState.OFF
             self.status_publisher.publish(status_message)
+
+            frame_count += 1
+            frame_count = frame_count % 100
 
             rate.sleep()
