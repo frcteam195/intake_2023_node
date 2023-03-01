@@ -82,6 +82,7 @@ class IntakeNode():
 
             status_message = Intake_Status()
             status_message.pinched = self.pincherSolenoid.get() == SolenoidState.OFF
+            status_message.is_node_alive = True
             self.status_publisher.publish(status_message)
 
             frame_count += 1
