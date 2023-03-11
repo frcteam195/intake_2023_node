@@ -64,7 +64,7 @@ class IntakeNode():
                             self.intakeRollerMotor.set(ControlMode.PERCENT_OUTPUT, intake_ctrl_msg.speed, 0.0)
                     elif intake_ctrl_msg.rollers_outtake:
                         if intake_ctrl_msg.speed == 0:
-                            self.intakeRollerMotor.set(ControlMode.PERCENT_OUTPUT, -0.10, 0.0)
+                            self.intakeRollerMotor.set(ControlMode.PERCENT_OUTPUT, -0.15, 0.0)
                         else:
                             self.intakeRollerMotor.set(ControlMode.PERCENT_OUTPUT, -intake_ctrl_msg.speed, 0.0)
                     else:
