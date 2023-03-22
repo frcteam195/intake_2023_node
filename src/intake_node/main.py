@@ -75,7 +75,7 @@ class IntakeNode():
                     else:
                         self.pincherSolenoid.set(SolenoidState.ON)
 
-            if frame_count % 2 is 0:
+            if frame_count % 2 == 0:
                 self.intake_simulation.publish_intake_1_link(self.pincherSolenoid.get() == SolenoidState.OFF)
                 self.intake_simulation.publish_intake_2_link(self.pincherSolenoid.get() == SolenoidState.OFF)
                 self.intake_simulation.publish_arrow_link(90, self.intakeRollerMotor.get_sensor_velocity())
